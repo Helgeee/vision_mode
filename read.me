@@ -1,0 +1,407 @@
+.vision-mode {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.6;
+    --vision-text: currentColor;
+}
+
+/* панель сверху */
+.access-panel {
+    display: none;
+}
+
+.vision-mode .access-panel {
+    display: block;
+    width: 100%;
+    background: #f3f3f3 !important;
+    color: #000 !important;
+    font-family: Arial, sans-serif !important;
+    padding: 10px;
+}
+
+/* сдвиг страницы */
+.vision-mode .access-panel + * {
+    margin-top: 20px;
+}
+
+/* header фикс */
+.vision-mode header,
+.vision-mode .navbar {
+    background: transparent !important;
+    color: inherit !important;
+}
+
+/* кнопки меню */
+.vision-mode .first-button {
+    background: transparent !important;
+    color: inherit !important;
+    border: 2px solid currentColor !important;
+}
+
+.vision-mode .first-button h2 {
+    color: inherit !important;
+}
+
+/* убираем svg чтобы не ломали цвета */
+.vision-mode .first-button svg {
+    display: none !important;
+}
+
+/* ссылки */
+.vision-mode a {
+    color: inherit !important;
+    text-decoration: underline !important;
+    font-weight: bold !important;
+}
+
+/* убираем эффекты */
+.vision-mode *:not(.access-panel):not(.access-panel *) {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+/* текст */
+.vision-mode p {
+    text-align: left !important;
+    max-width: 80ch;
+}
+
+/* обычные кнопки */
+.vision-mode button:not(.access-panel button),
+.vision-mode .btn:not(.access-panel .btn),
+.vision-mode .vision-btn {
+    background: transparent !important;
+    border: 2px solid currentColor !important;
+    border-radius: 4px !important;
+}
+
+.vision-mode button:not(.access-panel button):hover {
+    text-decoration: underline;
+}
+
+/* меню */
+.vision-mode .navbar a {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* карточки */
+.vision-mode .card {
+    border: 1px solid currentColor !important;
+    border-radius: 0 !important;
+}
+
+/* фокус */
+.vision-mode a:focus,
+.vision-mode button:focus,
+.vision-mode input:focus {
+    outline: 3px solid currentColor !important;
+    outline-offset: 2px;
+}
+
+/* темы */
+.vision-mode[data-theme="white"] {
+    background: #fff;
+    color: #000;
+}
+
+.vision-mode[data-theme="black"] {
+    background: #000;
+    color: #fff;
+}
+
+.vision-mode[data-theme="dark-blue"] {
+    background: #9DD1FF;
+    color: #063462;
+}
+
+.vision-mode[data-theme="brown-beige"] {
+    background: #F7F3D6;
+    color: #4D4B43;
+}
+
+.vision-mode[data-theme="green-darkbrown"] {
+    background: #1a1a1a;
+    color: #8cff00;
+}
+
+/* изображения */
+.vision-mode[data-images="grayscale"] img {
+    filter: grayscale(100%);
+}
+
+.vision-mode[data-images="off"] .img-box {
+    position: relative;
+    display: inline-block;
+    outline: 2px dashed var(--vision-text);
+}
+
+.vision-mode[data-images="off"] .img-box img {
+    opacity: 0 !important;
+}
+
+.vision-mode[data-images="off"] .img-box::after {
+    content: attr(data-alt);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--vision-text);
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
+
+.vision-mode[data-images="off"] .logo-img {
+    opacity: 1 !important;
+}
+
+/* медиа */
+.vision-mode[data-built="false"] iframe,
+.vision-mode[data-built="false"] video {
+    display: none !important;
+}
+
+/* шрифты */
+html[data-fontsize="small"] { font-size: 16px; }
+html[data-fontsize="medium"] { font-size: 20px; }
+html[data-fontsize="large"] { font-size: 26px; }
+
+html[data-spacing="wide"] {
+    letter-spacing: 0.1em;
+}
+
+html[data-fontweight="bold"] * {
+    font-weight: 700 !important;
+}
+
+/* логотип */
+.vision-mode .logo-text {
+    color: currentColor !important;
+}
+
+/* панель кнопки */
+.vision-mode .access-panel button,
+.vision-mode .access-panel .btn {
+    background: #fff !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+}
+
+.vision-mode .access-panel button:hover {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+.vision-mode .access-panel button.active {
+    outline: 2px solid #000 !important;
+}
+
+/* skip */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    z-index: 10000;
+}
+
+.skip-link:focus {
+    top: 0;
+}  
+  
+  
+  
+  
+  
+  /* =========================
+   VISION MODE (ГОТОВЫЙ)
+========================= */
+
+.vision-mode {
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+/* --- УБИРАЕМ ВСЮ КРАСОТУ САЙТА --- */
+.vision-mode,
+.vision-mode .stacked-radial,
+.vision-mode .blur,
+.vision-mode .card,
+.vision-mode .case-content,
+.vision-mode .card-back,
+.vision-mode .card-header {
+    background: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+/* --- ШРИФТЫ --- */
+.vision-mode * {
+    font-family: Arial, sans-serif !important;
+}
+
+/* --- ТЕКСТ --- */
+.vision-mode * {
+    color: inherit !important;
+}
+
+/* --- ССЫЛКИ --- */
+.vision-mode a:not(.nav-link):not(.first-button):not(.vision-btn):not(.btn):not(.no-underline) {
+    text-decoration: underline !important;
+    font-weight: bold !important;
+}
+
+/* --- КНОПКИ --- */
+.vision-mode button,
+.vision-mode .btn,
+.vision-mode .first-button,
+.vision-mode .vision-btn {
+    background: transparent !important;
+    color: inherit !important;
+    border: 2px solid currentColor !important;
+    border-radius: 4px !important;
+}
+
+/* --- hover --- */
+.vision-mode button:hover,
+.vision-mode a.btn:hover,
+.vision-mode .first-button:hover {
+    background: currentColor !important;
+    color: inherit !important;
+}
+
+/* --- ОТКЛЮЧАЕМ АНИМАЦИИ --- */
+.vision-mode * {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* --- NAVBAR --- */
+.vision-mode .navbar a,
+.vision-mode .nav-link {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+}
+
+/* --- КАРТОЧКИ --- */
+.vision-mode .card,
+.vision-mode .case-content {
+    border: 1px solid currentColor !important;
+    border-radius: 0 !important;
+}
+
+/* --- ИЗОБРАЖЕНИЯ --- */
+.vision-mode[data-bvi-images="false"] img {
+    display: none !important;
+}
+
+.vision-mode[data-bvi-images="grayscale"] img {
+    filter: grayscale(100%) !important;
+}
+
+/* --- ВИДЕО --- */
+.vision-mode[data-bvi-builtElements="false"] iframe,
+.vision-mode[data-bvi-builtElements="false"] video {
+    display: none !important;
+}
+
+/* --- ФОКУС --- */
+.vision-mode a:focus,
+.vision-mode button:focus,
+.vision-mode input:focus {
+    outline: 3px solid currentColor !important;
+    outline-offset: 2px !important;
+}
+
+/* --- УБИРАЕМ ЭФФЕКТЫ --- */
+.vision-mode .float-but:hover,
+.vision-mode .card:hover {
+    transform: none !important;
+    filter: none !important;
+}
+
+
+/* =========================
+   BVI MODE (ОСНОВА)
+========================= */
+
+.bvi-active {
+  background: #fff;
+  color: #000;
+}
+
+.bvi-active * {
+  background: transparent !important;
+  color: inherit !important;
+  border-color: currentColor !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* =========================
+   🔵 ТЕМЫ BVI
+========================= */
+
+/* Белая */
+[data-bvi-theme="white"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Чёрная */
+[data-bvi-theme="black"] {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Синяя */
+[data-bvi-theme="blue"] {
+  background-color: #9DD1FF !important;
+  color: #063462 !important;
+}
+
+/* Коричневая */
+[data-bvi-theme="brown"] {
+  background-color: #F7F3D6 !important;
+  color: #4D4B43 !important;
+}
+
+/* 🔥 ЗЕЛЕНАЯ (УЛУЧШЕННАЯ) */
+[data-bvi-theme="green"] {
+  background-color: #2b1a0f !important; /* темно-коричневый */
+  color: #8cff00 !important; /* ярко-зеленый */
+}
+
+/* --- ССЫЛКИ --- */
+.bvi-active a {
+  color: inherit !important;
+  text-decoration: underline;
+}
+
+/* --- КНОПКИ --- */
+.bvi-active button {
+  background: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+}
+
+/* --- ВЫДЕЛЕНИЕ --- */
+.bvi-active ::selection {
+  background: currentColor;
+  color: inherit;
+}
+
+/* --- БЛОКИ --- */
+.bvi-active body,
+.bvi-active section,
+.bvi-active div {
+  background-color: transparent !important;
+  color: inherit !important;
+}
