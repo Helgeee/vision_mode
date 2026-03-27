@@ -5,8 +5,6 @@ import { VisionSpeech } from './vision-speech.js';
 
 
 export class Vision {
-
-    
     constructor(options = {}) {
         this.button = document.querySelector(options.button);
         this.storage = new VisionStorage();
@@ -29,40 +27,46 @@ export class Vision {
             letterSpacing: 'normal',
             lineHeight: 'normal',
             built: 'true',
-            sound: true
+            sound: true,
+            panelOpen: false
         };
 
         this.init();
     }
 
     init() {
-        requestAnimationFrame(() => {
-            this.ui.create();
-            this.ui.bind();
-        });
-
         const saved = this.storage.load();
         if (saved) {
             this.state = { ...this.state, ...saved };
-
-            if (this.state.enabled) {
-                this.enable();
-            }
-
-            this.applyAll();
         }
+
+        this.ui.create();
+        this.ui.bind();
+
+        if (this.state.enabled) {
+            this.enable({ announce: false, persist: false });
+        } else {
+            this.resetDomState();
+        }
+
+        this.ui.syncPanelState(Boolean(this.state.enabled && this.state.panelOpen), false);
+        this.ui.updateActiveButtons();
 
         if (this.button) {
             this.button.addEventListener('click', () => {
-                this.toggle();
+                if (!this.state.enabled) {
+                    this.enable();
+                    this.ui.syncPanelState(true);
+                    return;
+                }
+
                 this.ui.togglePanel();
             });
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                const panel = document.querySelector('.access-panel');
-                if (panel) panel.classList.remove('active');
+                this.ui.syncPanelState(false);
             }
         });
 
@@ -74,50 +78,57 @@ export class Vision {
         this.state.enabled ? this.disable() : this.enable();
     }
 
-    enable() {
+    enable(options = {}) {
+        const { announce = true, persist = true } = options;
+
         this.state.enabled = true;
         document.body.classList.add('vision-mode');
         this.applyAll();
-        this.storage.save(this.state);
+        this.ui.updatePanelOffset();
 
-        if ('speechSynthesis' in window && this.state.sound) {
+        if (persist) {
+            this.storage.save(this.state);
+        }
+
+        if (announce && 'speechSynthesis' in window && this.state.sound) {
             this.speech.speak('Режим для слабовидящих включен');
         }
     }
 
     disable() {
-    this.state.enabled = false;
+        this.state.enabled = false;
+        this.state.panelOpen = false;
 
-    const body = document.body;
+        this.resetDomState();
+        this.ui.syncPanelState(false, false);
 
-   
-    body.classList.remove('vision-mode');
-    body.classList.remove('bvi-active');
+        if ('speechSynthesis' in window) {
+            speechSynthesis.cancel();
+        }
 
- 
-    body.removeAttribute('data-theme');
-    body.removeAttribute('data-images');
-    body.removeAttribute('data-fontfamily');
-    body.removeAttribute('data-letterspacing');
-    body.removeAttribute('data-lineheight');
-    body.removeAttribute('data-built');
-
-    // ❗ сброс inline стилей
-    body.style.fontSize = '';
-
-    // ❗ останавливаем озвучку (иногда блокирует UX)
-    if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
+        this.storage.save(this.state);
     }
-
-    this.storage.save(this.state);
-}
 
     update(key, value) {
         this.state[key] = value;
-        this.apply(key, value);
+
+        if (key === 'sound') {
+            this.storage.save(this.state);
+            this.ui.updateActiveButtons();
+
+            if ('speechSynthesis' in window && this.state.sound) {
+                this.speech.speak(this.getSpeechText(key, value));
+            }
+
+            return;
+        }
+
+        if (this.state.enabled) {
+            this.apply(key, value);
+            this.ui.updatePanelOffset();
+        }
+
         this.storage.save(this.state);
-        
         this.ui.updateActiveButtons();
 
         if ('speechSynthesis' in window && this.state.sound) {
@@ -126,7 +137,7 @@ export class Vision {
     }
 
     applyAll() {
-        Object.keys(this.state).forEach(key => {
+        ['fontSize', 'theme', 'fontFamily', 'images', 'letterSpacing', 'lineHeight', 'built'].forEach(key => {
             this.apply(key, this.state[key]);
         });
     }
@@ -143,6 +154,25 @@ export class Vision {
             case 'lineHeight': body.dataset.lineheight = value; break;
             case 'built': body.dataset.built = value; break;
         }
+    }
+
+    resetDomState() {
+        const body = document.body;
+
+        body.classList.remove('vision-mode');
+        body.classList.remove('bvi-active');
+        body.classList.remove('panel-open');
+
+        body.removeAttribute('data-theme');
+        body.removeAttribute('data-images');
+        body.removeAttribute('data-fontfamily');
+        body.removeAttribute('data-letterspacing');
+        body.removeAttribute('data-lineheight');
+        body.removeAttribute('data-built');
+
+        body.style.fontSize = '';
+        body.style.paddingTop = '';
+        document.documentElement.style.removeProperty('--panel-height');
     }
 
     applyAlt() {

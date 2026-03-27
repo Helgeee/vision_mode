@@ -6,9 +6,19 @@ import { Vision } from './vision/vision.js';
 
 window.Vision = Vision;
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (!window.__visionInitialized) {
-        window.__visionInitialized = true;
-        new Vision({ button: '#vision-btn' });
+function initVision() {
+    if (window.__visionApp) {
+        return window.__visionApp;
     }
-});
+
+    window.__visionInitialized = true;
+    window.__visionApp = new Vision({ button: '#vision-btn' });
+
+    return window.__visionApp;
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVision, { once: true });
+} else {
+    initVision();
+}

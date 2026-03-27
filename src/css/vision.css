@@ -5,10 +5,20 @@
     left: 0;
     width: 100%;
     z-index: 999999;
-    background: #f3f3f3;
-
+    background: #f3f3f3 !important;
+    color: #000 !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
     transform: translateY(-100%);
     transition: transform 0.3s ease;
+}
+
+.access-panel,
+.access-panel * {
+    box-sizing: border-box;
 }
 
 .access-panel.active {
@@ -44,8 +54,10 @@ body.panel-open .btn-open {
 .panel-content {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 16px 20px;
 
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
     gap: 40px;
@@ -75,18 +87,20 @@ body.panel-open .btn-open {
 .block button {
     min-width: 40px;
     height: 36px;
-    border: 1px solid #000;
+    border: 1px solid #000 !important;
     font-weight: 600;
-    background: #fff;
+    background: #fff !important;
+    color: #000 !important;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 16px !important;
+    line-height: 1 !important;
     padding: 0 10px;
     border-radius: 4px;
 }
 
 .block button:hover {
-    background: #000;
-    color: #fff;
+    background: #000 !important;
+    color: #fff !important;
 }
 
 .block button.active {
@@ -94,11 +108,20 @@ body.panel-open .btn-open {
 }
 
 /* темы */
-button[data-theme="white"] { background: #fff; color: #000; }
-button[data-theme="black"] { background: #000; color: #fff; }
-button[data-theme="dark-blue"] { background: #a8c4ff; color: #000; }
-button[data-theme="brown-beige"] { background: #e8dec7; color: #000; }
-button[data-theme="green-darkbrown"] { background: #3b2a00; color: #00ff00; }
+.access-panel button[data-theme="white"] { background: #fff !important; color: #000 !important; }
+.access-panel button[data-theme="black"] { background: #000 !important; color: #fff !important; }
+.access-panel button[data-theme="dark-blue"] { background: #a8c4ff !important; color: #000 !important; }
+.access-panel button[data-theme="brown-beige"] { background: #e8dec7 !important; color: #000 !important; }
+.access-panel button[data-theme="green-darkbrown"] { background: #3b2a00 !important; color: #00ff00 !important; }
+
+.access-panel button[data-theme]:hover {
+    filter: brightness(0.92);
+}
+
+.access-panel svg,
+.access-panel path {
+    pointer-events: none;
+}
 
 /* адаптив */
 @media (max-width: 768px) {

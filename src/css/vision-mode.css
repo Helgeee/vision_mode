@@ -1,4 +1,4 @@
-.vision-mode {
+body.vision-mode {
     font-family: Arial, sans-serif;
     font-size: 20px;
     line-height: 1.6;
@@ -6,95 +6,99 @@
     color: #000 !important;
 }
 
-.vision-mode body *:not(.access-panel):not(.access-panel *) {
+body.vision-mode *:not(.access-panel):not(.access-panel *) {
     background-image: none !important;
-    
     box-shadow: none !important;
     text-shadow: none !important;
     backdrop-filter: none !important;
     transition: none !important;
     animation: none !important;
+    color: inherit !important;
+    border-color: currentColor !important;
+    fill: currentColor;
+    stroke: currentColor;
 }
-.vision-mode img {
+
+body.vision-mode img:not(.access-panel img) {
     filter: none !important;
 }
 
-.vision-mode * {
+body.vision-mode *:not(.access-panel):not(.access-panel *) {
     text-shadow: none !important;
     box-shadow: none !important;
 }
 
-.vision-mode a {
+body.vision-mode a:not(.access-panel a) {
     color: inherit !important;
     text-decoration: underline !important;
     font-weight: bold !important;
 }
 
-.vision-mode p {
+body.vision-mode p:not(.access-panel p) {
     text-align: left !important;
     max-width: 80ch;
 }
 
-.vision-mode button,
-.vision-mode .btn,
-.vision-mode .vision-btn {
+body.vision-mode button:not(.access-panel button),
+body.vision-mode .btn:not(.access-panel .btn),
+body.vision-mode .vision-btn:not(.access-panel .vision-btn) {
     background: transparent !important;
     border: 2px solid currentColor !important;
     border-radius: 4px !important;
 }
 
-.vision-mode .card,
-.vision-mode .case-content,
-.vision-mode .card-back,
-.vision-mode .card-header,
-.vision-mode .first-button {
+body.vision-mode .card:not(.access-panel .card),
+body.vision-mode .case-content:not(.access-panel .case-content),
+body.vision-mode .card-back:not(.access-panel .card-back),
+body.vision-mode .card-header:not(.access-panel .card-header),
+body.vision-mode .first-button:not(.access-panel .first-button) {
     background: transparent !important;
     border: 2px solid currentColor !important;
 }
 
-.vision-mode header,
-.vision-mode .navbar {
+body.vision-mode header,
+body.vision-mode .navbar {
      background: inherit !important;
     border-bottom: 2px solid currentColor;
 }
 
 /* Темы */
-.vision-mode[data-theme="white"] { background: #fff !important; color: #000; }
-.vision-mode[data-theme="black"] { background: #000 !important; color: #fff; }
-.vision-mode[data-theme="dark-blue"] { background: #9DD1FF !important; color: #063462; }
-.vision-mode[data-theme="brown-beige"] { background: #F7F3D6 !important; color: #4D4B43; }
-.vision-mode[data-theme="green-darkbrown"] { background: #1a1a1a !important; color: #8cff00; }
+body.vision-mode[data-theme="white"] { background: #fff !important; color: #000; }
+body.vision-mode[data-theme="black"] { background: #000 !important; color: #fff; }
+body.vision-mode[data-theme="dark-blue"] { background: #9DD1FF !important; color: #063462; }
+body.vision-mode[data-theme="brown-beige"] { background: #F7F3D6 !important; color: #4D4B43; }
+body.vision-mode[data-theme="green-darkbrown"] { background: #1a1a1a !important; color: #8cff00; }
 
 /* Адаптивные стили */
 @media (max-width: 575px) {
-    .vision-mode { font-size: 16px; line-height: 1.4; }
-    .vision-mode p { max-width: 100%; }
-    .vision-mode button,
-    .vision-mode .btn,
-    .vision-mode .vision-btn { padding: 8px 12px; font-size: 14px; }
-    .vision-mode .first-button h2 { font-size: 1em; }
+    body.vision-mode { font-size: 16px; line-height: 1.4; }
+    body.vision-mode p:not(.access-panel p) { max-width: 100%; }
+    body.vision-mode button:not(.access-panel button),
+    body.vision-mode .btn:not(.access-panel .btn),
+    body.vision-mode .vision-btn:not(.access-panel .vision-btn) { padding: 8px 12px; font-size: 14px; }
+    body.vision-mode .first-button h2 { font-size: 1em; }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
-    .vision-mode { font-size: 18px; line-height: 1.5; }
-    .vision-mode button,
-    .vision-mode .btn,
-    .vision-mode .vision-btn { padding: 10px 14px; font-size: 15px; }
-    .vision-mode .first-button h2 { font-size: 1.1em; }
+    body.vision-mode { font-size: 18px; line-height: 1.5; }
+    body.vision-mode button:not(.access-panel button),
+    body.vision-mode .btn:not(.access-panel .btn),
+    body.vision-mode .vision-btn:not(.access-panel .vision-btn) { padding: 10px 14px; font-size: 15px; }
+    body.vision-mode .first-button h2 { font-size: 1.1em; }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    .vision-mode { font-size: 19px; line-height: 1.55; }
-    .vision-mode button,
-    .vision-mode .btn,
-    .vision-mode .vision-btn { padding: 12px 16px; font-size: 16px; }
-    .vision-mode .first-button h2 { font-size: 1.15em; }
+    body.vision-mode { font-size: 19px; line-height: 1.55; }
+    body.vision-mode button:not(.access-panel button),
+    body.vision-mode .btn:not(.access-panel .btn),
+    body.vision-mode .vision-btn:not(.access-panel .vision-btn) { padding: 12px 16px; font-size: 16px; }
+    body.vision-mode .first-button h2 { font-size: 1.15em; }
 }
 
 @media (min-width: 992px) {
-    .vision-mode { font-size: 20px; line-height: 1.6; }
-    .vision-mode button,
-    .vision-mode .btn,
-    .vision-mode .vision-btn { padding: 14px 18px; font-size: 16px; }
-    .vision-mode .first-button h2 { font-size: 1.2em; }
+    body.vision-mode { font-size: 20px; line-height: 1.6; }
+    body.vision-mode button:not(.access-panel button),
+    body.vision-mode .btn:not(.access-panel .btn),
+    body.vision-mode .vision-btn:not(.access-panel .vision-btn) { padding: 14px 18px; font-size: 16px; }
+    body.vision-mode .first-button h2 { font-size: 1.2em; }
 }

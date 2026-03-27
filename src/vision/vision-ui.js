@@ -1,13 +1,20 @@
 export class VisionUI {
     constructor(app) {
         this.app = app;
+        this.isBound = false;
+        this.handleWindowResize = this.updatePanelOffset.bind(this);
+        this.resizeObserver = null;
     }
 
     create() {
-        if (document.querySelector('.access-panel')) return;
+        if (document.querySelector('.access-panel')) {
+            this.setupObservers();
+            return;
+        }
 
         const panel = document.createElement('div');
         panel.className = 'access-panel';
+        panel.setAttribute('data-vision-panel', 'true');
 
         panel.innerHTML = `
         <div class="panel-content">
@@ -69,6 +76,7 @@ export class VisionUI {
             document.body.prepend(panel);
         }
 
+        this.setupObservers();
         this.updateActiveButtons();
     }
 
@@ -76,44 +84,69 @@ export class VisionUI {
         const panel = document.querySelector('.access-panel');
         if (!panel) return;
 
-        panel.classList.toggle('active');
-        const isOpen = panel.classList.contains('active');
+        this.syncPanelState(!panel.classList.contains('active'));
+    }
+
+    syncPanelState(isOpen, persist = true) {
+        const panel = document.querySelector('.access-panel');
+        if (!panel) return;
+
+        panel.classList.toggle('active', isOpen);
+        this.app.state.panelOpen = isOpen;
 
         document.body.classList.toggle('panel-open', isOpen);
+        this.updatePanelOffset();
 
-        if (isOpen) {
-            requestAnimationFrame(() => {
-                const height = panel.offsetHeight;
-
-                document.body.style.paddingTop = height + 'px';
-                document.documentElement.style.setProperty('--panel-height', height + 'px');
-            });
-        } else {
-            document.body.style.paddingTop = '';
-            document.documentElement.style.removeProperty('--panel-height');
+        if (persist) {
+            this.app.storage.save(this.app.state);
         }
 
         this.updateActiveButtons();
     }
 
+    updatePanelOffset() {
+        const panel = document.querySelector('.access-panel');
+        if (!panel) return;
+
+        requestAnimationFrame(() => {
+            const isOpen = panel.classList.contains('active') && this.app.state.enabled;
+
+            if (!isOpen) {
+                document.body.style.paddingTop = '';
+                document.documentElement.style.removeProperty('--panel-height');
+                return;
+            }
+
+            const height = panel.offsetHeight;
+            document.body.style.paddingTop = height + 'px';
+            document.documentElement.style.setProperty('--panel-height', height + 'px');
+        });
+    }
+
     updateActiveButtons() {
-        document.querySelectorAll('[data-theme]').forEach(btn => {
+        document.querySelectorAll('.access-panel [data-theme]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.theme === this.app.state.theme);
         });
 
-        document.querySelectorAll('[data-images]').forEach(btn => {
+        document.querySelectorAll('.access-panel [data-images]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.images === this.app.state.images);
         });
 
-        document.querySelectorAll('[data-sound="toggle"]').forEach(btn => {
+        document.querySelectorAll('.access-panel [data-sound="toggle"]').forEach(btn => {
             btn.classList.toggle('active', this.app.state.sound === true);
             btn.textContent = this.app.state.sound ? '🔊' : '🔈';
         });
     }
 
     bind() {
+        if (this.isBound) {
+            return;
+        }
+
+        this.isBound = true;
+
         document.body.addEventListener('click', (e) => {
-            const el = e.target.closest('button');
+            const el = e.target.closest('.access-panel button');
             if (!el) return;
 
             if (el.dataset.action === 'font-plus') {
@@ -142,15 +175,24 @@ export class VisionUI {
 
             if (el.dataset.disable === 'vision') {
                 this.app.disable();
-
-                const panel = document.querySelector('.access-panel');
-                if (panel) panel.classList.remove('active');
-
-                document.body.classList.remove('panel-open');
-                document.body.style.paddingTop = '';
             }
 
             this.updateActiveButtons();
         });
+    }
+
+    setupObservers() {
+        const panel = document.querySelector('.access-panel');
+        if (!panel) return;
+
+        if (!this.resizeObserver && 'ResizeObserver' in window) {
+            this.resizeObserver = new ResizeObserver(() => {
+                this.updatePanelOffset();
+            });
+            this.resizeObserver.observe(panel);
+        }
+
+        window.removeEventListener('resize', this.handleWindowResize);
+        window.addEventListener('resize', this.handleWindowResize);
     }
 }
