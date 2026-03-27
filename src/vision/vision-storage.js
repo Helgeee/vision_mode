@@ -1,5 +1,4 @@
-import '../css/vision.css';
-import '../css/vision-mode.css';
+
 
 export class VisionStorage {
     constructor(key = 'vision-settings') {

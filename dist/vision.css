@@ -19,6 +19,11 @@ body.panel-open {
     padding-top: var(--panel-height);
 }
 
+.access-panel.active {
+    transform: translateY(0);
+    min-height: 90px;
+}
+
 
 body.panel-open header {
     position: relative;
@@ -126,14 +131,22 @@ button[data-theme="green-darkbrown"] { background: #3b2a00; color: #00ff00; }
     color: #000 !important;
 }
 
-.vision-mode *:not(.access-panel):not(.access-panel *) {
+.vision-mode body *:not(.access-panel):not(.access-panel *) {
     background-image: none !important;
-    background: transparent !important;
+    
     box-shadow: none !important;
     text-shadow: none !important;
     backdrop-filter: none !important;
     transition: none !important;
     animation: none !important;
+}
+.vision-mode img {
+    filter: none !important;
+}
+
+.vision-mode * {
+    text-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .vision-mode a {
@@ -166,16 +179,16 @@ button[data-theme="green-darkbrown"] { background: #3b2a00; color: #00ff00; }
 
 .vision-mode header,
 .vision-mode .navbar {
-    background: transparent !important;
+     background: inherit !important;
     border-bottom: 2px solid currentColor;
 }
 
 /* Темы */
-.vision-mode[data-theme="white"] { background: #fff; color: #000; }
-.vision-mode[data-theme="black"] { background: #000; color: #fff; }
-.vision-mode[data-theme="dark-blue"] { background: #9DD1FF; color: #063462; }
-.vision-mode[data-theme="brown-beige"] { background: #F7F3D6; color: #4D4B43; }
-.vision-mode[data-theme="green-darkbrown"] { background: #1a1a1a; color: #8cff00; }
+.vision-mode[data-theme="white"] { background: #fff !important; color: #000; }
+.vision-mode[data-theme="black"] { background: #000 !important; color: #fff; }
+.vision-mode[data-theme="dark-blue"] { background: #9DD1FF !important; color: #063462; }
+.vision-mode[data-theme="brown-beige"] { background: #F7F3D6 !important; color: #4D4B43; }
+.vision-mode[data-theme="green-darkbrown"] { background: #1a1a1a !important; color: #8cff00; }
 
 /* Адаптивные стили */
 @media (max-width: 575px) {
